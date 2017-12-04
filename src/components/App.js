@@ -1,38 +1,48 @@
 import React from 'react';
-import Header from './Header';
-import Content from './Content';
-import RandomNumber from './RandomNumber';
 
 class App extends React.Component {
+  render() {
+    return (
+      <Contacts/>
+    );
+  }
+}
+
+class Contacts extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      value: Math.round(Math.random() * 100)
+      contactData: [
+        {name: "Alert", phone: "010-0000-0001"},
+        {name: "Betty", phone: "010-0000-0002"},
+        {name: "Charlie", phone: "010-0000-0003"},
+        {name: "David", phone: "010-0000-0004"}
+      ]
     };
-
-    this.updateValue = this.updateValue.bind(this);
   }
 
-  updateValue(randomValue) {
-    this.setState({value: randomValue});
-  }
-  
   render() {
     return (
       <div>
-        <Header title={this.props.header}/>
-        <Content title={this.props.contentTitle} body={this.props.contentBody}/>
-        <RandomNumber number={this.state.value} onUpdate={this.updateValue}/>
+        <h1>Contacts</h1>
+        <ul>
+          {this.state.contactData.map((contact, i) => {
+            return (
+              <ContactInfo name={contact.name} phone={contact.phone} key={i} />
+            );
+          })}
+        </ul>
       </div>
     );
   }
 }
 
-App.defaultProps = {
-  header: 'Default header',
-  contentTitle: 'Default contentTitle',
-  contentBody: 'Default contentBody'
-};
+class ContactInfo extends React.Component {
+  render() {
+    return(
+      <li>{this.props.name} {this.props.phone}</li>
+    );
+  }
+}
 
 export default App;
