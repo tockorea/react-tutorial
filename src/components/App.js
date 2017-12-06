@@ -135,7 +135,7 @@ class ContactInfo extends React.Component {
 
   render() {
     console.log("rendered: " + this.props.name);
-    
+
     let getStyle = isSelect => {
       if(!isSelect) return;
 
@@ -173,12 +173,19 @@ class ContactCreator extends React.Component {
       name: "",
       phone: ""
     });
+    this.nameInput.focus();
   }
 
   handleChange(e) {
     var nextState = {};
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);
+  }
+
+  handleKeyPress(e) {
+    if (e.charCode === 13) {
+      this.handleClick();
+    }
   }
 
   render() {
@@ -190,13 +197,15 @@ class ContactCreator extends React.Component {
             name="name"
             placeholder="name"
             value={this.state.name}
-            onChange={this.handleChange.bind(this)}/>
+            onChange={this.handleChange.bind(this)}
+            ref={(ref) => {this.nameInput = ref;}}/>
           <input
             type="text"
             name="phone"
             placeholder="phone"
             value={this.state.phone}
-            onChange={this.handleChange.bind(this)}/>
+            onChange={this.handleChange.bind(this)}
+            onKeyPress={this.handleKeyPress.bind(this)}/>
           <button onClick={this.handleClick.bind(this)}>Insert</button>
         </p>
       </div>
@@ -249,6 +258,12 @@ class ContactEditor extends React.Component {
     });
   }
 
+  handleKeyPress(e) {
+    if (e.charCode === 13) {
+      this.handleClick();
+    }
+  }
+
   render() {
     return(
       <div>
@@ -264,7 +279,8 @@ class ContactEditor extends React.Component {
             name="phone"
             placeholder="phone"
             value={this.state.phone}
-            onChange={this.handleChange.bind(this)}/>
+            onChange={this.handleChange.bind(this)}
+            onKeyPress={this.handleKeyPress.bind(this)}/>
           <button onClick={this.handleClick.bind(this)}>Edit</button>
         </p>
       </div>
